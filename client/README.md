@@ -68,3 +68,46 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+
+
+
+# Cookies and Sessions Lab - Blog Paywall
+
+## Description
+This application is a blog platform featuring a secure paywall mechanism. To prevent tech-savvy users from bypassing frontend limits via browser dev tools, the application now enforces a maximum of **3 article views per session** using backend session management (cookies). Once a user views 3 articles, any subsequent requests to view an article will return a `401 Unauthorized` status with an appropriate error message, triggering the paywall UI in the React frontend.
+
+## Features
+- **Backend Session Management**: Tracks page views securely on the server using Flask sessions.
+- **Paywall Enforcement**: Limits users to 3 article views before blocking access.
+- **Session Reset Endpoint**: A `/clear` endpoint is provided to reset the session counter for testing purposes.
+- **React Frontend**: Displays articles and gracefully shows a paywall message when the limit is reached.
+
+## Setup and Installation
+
+### Prerequisites
+- Python 3.x
+- Node.js and npm
+- Pipenv
+
+### Backend Setup
+1. Install Python dependencies and activate the virtual environment:
+   ```bash
+   pipenv install && pipenv shell
+   npm install
+
+
+   cd server
+      flask db upgrade
+   python seed.py
+   python app.py
+
+   cd client
+   npm install
+   npm start
+
+   pytest -x
+   API Endpoints
+GET /articles: Returns a list of all articles.
+GET /articles/<int:id>: Returns a specific article. Enforces the 3-view limit via session tracking.
+GET /clear: Resets the page_views session variable to 0.
